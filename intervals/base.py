@@ -14,8 +14,8 @@ class IntervalPlain:
 
     def __init__(self,
                  data: pd.DataFrame,
-                 a: str,  # pylint disable=invalid-name
-                 b: str):  # pylint disable=invalid-name
+                 a: str,  # pylint: disable=invalid-name
+                 b: str):  # pylint: disable=invalid-name
 
         self._a = a
         self._b = b
