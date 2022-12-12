@@ -3,7 +3,6 @@ name = "intervals"
 version = "0.1.0"
 description = ""
 authors = ["Arseniy Shchepetnov <a.shchepetnov@gmail.com>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
