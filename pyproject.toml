@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "intervals"
+version = "0.1.0"
+description = ""
+authors = ["Arseniy Shchepetnov <a.shchepetnov@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+mypy = "^0.991"
+autopep8 = "^2.0.0"
+pylint = "^2.15.8"
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
