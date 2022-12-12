@@ -26,7 +26,15 @@ jobs:
 
       - name: Lint with mypy
         run: |
-          poetry run mypy
+          poetry run mypy intervals
+
+      - name: Lint tests with pylint
+        run: |
+          poetry run pylint tests --fail-under=10
+
+      - name: Lint tests with mypy
+        run: |
+          poetry run mypy tests
 
       - name: Test with pytest
         run: |
