@@ -14,8 +14,8 @@ class IntervalPlain:
 
     def __init__(self,
                  data: pd.DataFrame,
-                 a: str,
-                 b: str):
+                 a: str,  # pylint disable=invalid-name
+                 b: str):  # pylint disable=invalid-name
 
         self._a = a
         self._b = b
@@ -38,12 +38,12 @@ class IntervalPlain:
         return self._b
 
     @property
-    def a(self) -> str:
+    def a(self) -> str:  # pylint: disable=invalid-name
         """Start column name."""
         return self._a
 
     @property
-    def b(self) -> str:
+    def b(self) -> str:  # pylint: disable=invalid-name
         """End column name."""
         return self._b
 
@@ -77,7 +77,7 @@ class IntervalSequential:
 
     def __init__(self,
                  data: pd.DataFrame,
-                 x: str,
+                 x: str,  # pylint: disable=invalid-name
                  id_: str,
                  start: str):
 
@@ -95,7 +95,7 @@ class IntervalSequential:
         return self._data
 
     @property
-    def x(self) -> str:
+    def x(self) -> str:  # pylint: disable=invalid-name
         """Column name with interval endpoints values."""
         return self._x
 
@@ -112,7 +112,7 @@ class IntervalSequential:
     @classmethod
     def from_plain(cls,
                    plain: IntervalPlain,
-                   x: str = "x",
+                   x: str = "x",  # pylint: disable=invalid-name
                    id_: str = "id",
                    start: str = "start") -> "IntervalSequential":
         """Convert interval plain form to sequential."""
