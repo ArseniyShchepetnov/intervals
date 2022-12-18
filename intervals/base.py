@@ -135,9 +135,11 @@ class IntervalSequential:
         sequence = sequence.reset_index(drop=True)
         return cls(sequence, x=x, id_=id_, start=start)
 
-    def to_plain(self, a: str, b: str) -> IntervalPlain:
+    def to_plain(self, a: str, b: str) -> IntervalPlain:  # pylint: disable=invalid-name
         """Convert to plain intervals."""
-        values = self.data[self.x].values.reshape(int(self.data.shape[0] / 2), 2)
+        assert self.data.shape[0] % 2 == 0
+        n_intervals = int(self.data.shape[0] / 2)
+        values = self.data[self.x].values.reshape(n_intervals, 2)
         data = pd.DataFrame(values, columns=[a, b])
         return IntervalPlain(data, a=a, b=b)
 
