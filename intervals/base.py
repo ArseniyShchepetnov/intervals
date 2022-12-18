@@ -174,7 +174,8 @@ class IntervalSequential:
 
         return filter_ids
 
-    def intersection(self, other: "IntervalSequential") -> "IntervalSequential":
+    def intersection(self,
+                     other: "IntervalSequential") -> "IntervalSequential":
         """Get interval in sequential form which intersect with other data."""
         filter_ids = self.intersection_ids(other)
 
