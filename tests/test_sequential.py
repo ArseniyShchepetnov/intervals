@@ -24,21 +24,23 @@ def test_all_adjacent():
 def test_intersection():
     """Test intersection method in sequential form."""
 
-    data_a = pd.DataFrame({"a": [0, 10, 20, 30],
-                           "b": [5, 15, 25, 35]})
-    data_x = pd.DataFrame({"x": [17, 22, 100],
-                           "y": [18, 32, 110]})
+    data_a = pd.DataFrame({"a": [0, 10, 20, 30, 40],
+                           "b": [5, 15, 25, 35, 45]})
+    data_x = pd.DataFrame({"x": [17, 22, 100, 41],
+                           "y": [18, 32, 110, 42]})
     plain_a = IntervalPlain(data_a, "a", "b")
     plain_x = IntervalPlain(data_x, "x", "y")
+    plain_intersect = plain_a.intersect(plain_x)
 
     sequential_a = IntervalSequential.from_plain(plain_a, "a", "id")
     sequential_x = IntervalSequential.from_plain(plain_x, "x", "n")
 
     result = sequential_a.intersection(sequential_x)
 
-    expected = pd.DataFrame({"id": [2, 2, 3, 3],
-                             "a": [20, 25, 30, 35],
-                             "start": [1, 0, 1, 0]})
+    expected = pd.DataFrame({"id": [2, 2, 3, 3, 4, 4],
+                             "a": [20, 25, 30, 35, 40, 45],
+                             "start": [1, 0, 1, 0, 1, 0]})
     expected = expected.astype({"id": "Int64", "start": "Int64"})
 
     assert expected.equals(result.data)
+    assert result.to_plain("a", "b").data.equals(plain_intersect.data)

@@ -64,6 +64,11 @@ class IntervalPlain:
 
         return where_intersect
 
+    def intersect(self, other: "IntervalPlain") -> "IntervalPlain":
+        """Intersect data."""
+        where = self.where_intersection_cycle(other)
+        return IntervalPlain(self.data[where], a=self.a, b=self.b)
+
 
 class IntervalSequential:
     """
@@ -130,6 +135,12 @@ class IntervalSequential:
         sequence = sequence.reset_index(drop=True)
         return cls(sequence, x=x, id_=id_, start=start)
 
+    def to_plain(self, a: str, b: str) -> IntervalPlain:
+        """Convert to plain intervals."""
+        values = self.data[self.x].values.reshape(int(self.data.shape[0] / 2), 2)
+        data = pd.DataFrame(values, columns=[a, b])
+        return IntervalPlain(data, a=a, b=b)
+
     def intersection_ids(self, other: "IntervalSequential") -> np.ndarray:
         """
         Returns identificators of intervals which intersect with other data.
@@ -152,13 +163,16 @@ class IntervalSequential:
 
         filter_series = merged[other_start].fillna(method="ffill")
         filter_series += filter_series.shift(1).fillna(0)
+        start_series = merged[self.start].fillna(method="ffill")
+        start_series += start_series.shift(1).fillna(0)
 
-        merged = merged[(filter_series > 0) & filter_series.notna()]
-        filter_ids = merged[self.id_].dropna().unique()
+        merged[self._id] = merged[self._id].fillna(method="ffill")
+        merged = merged[(filter_series > 0) & (start_series > 0)]
+        filter_ids = merged[self.id_].unique()
 
         return filter_ids
 
-    def intersection(self, other: "IntervalSequential") -> pd.Series:
+    def intersection(self, other: "IntervalSequential") -> "IntervalSequential":
         """Get interval in sequential form which intersect with other data."""
         filter_ids = self.intersection_ids(other)
 
